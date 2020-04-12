@@ -36,7 +36,8 @@
  */
 package org.berlin.mech.gl;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
 /**
  * @author bbrown
@@ -50,12 +51,12 @@ public class CoreObjects {
      * Render cube in center of scene.
      * @param gl
      */
-    public void centerCube(final GL gl) {
+    public void centerCube(final GL2 gl) {
         
         gl.glPushMatrix();
         gl.glRotatef(rotqube,0.0f,1.0f,0.0f);    // Rotate The cube around the Y axis        
         
-        gl.glBegin(GL.GL_QUADS);     // Draw The Cube Using quads
+        gl.glBegin(GL2.GL_QUADS);     // Draw The Cube Using quads
         gl.glColor3f(0.0f,   1.0f,0.0f);  // Color Blue
         
         gl.glVertex3f( 1.0f, 9.0f,-1.0f);  // Top Right Of The Quad (Top)
@@ -101,9 +102,9 @@ public class CoreObjects {
      * Render cube in center of scene.
      * @param gl
      */
-    public void cube(final GL gl, final float h, final float sz, float x, float y) {
+    public void cube(final GL2 gl, final float h, final float sz, float x, float y) {
                      
-        gl.glBegin(GL.GL_QUADS);     // Draw The Cube Using quads
+        gl.glBegin(GL2.GL_QUADS);     // Draw The Cube Using quads
         gl.glColor3f(  0.0f, 1.0f, 0.0f);  // Color Blue
        
         gl.glVertex3f( sz+x, h,-sz+y);  // Top Right Of The Quad (Top)

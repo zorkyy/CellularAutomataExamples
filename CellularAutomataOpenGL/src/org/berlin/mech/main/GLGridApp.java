@@ -43,15 +43,16 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
 
-import javax.media.opengl.GLCanvas;
+//import com.jogamp.opengl.GLCanvas;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+import com.jogamp.opengl.awt.GLCanvas;
 import org.berlin.mech.gl.GLMainRenderer;
 
-import com.sun.opengl.util.Animator;
+import com.jogamp.opengl.util.Animator;
 
 /**
  * JFrame for the java opengl window.

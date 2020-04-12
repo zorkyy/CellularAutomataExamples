@@ -38,8 +38,9 @@
  */
 package org.berlin.mech.gl;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.glu.GLU;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
 
 /**
  * @author bbrown
@@ -51,14 +52,14 @@ public class CameraManager {
      * Active camera.
      */
     private Camera camera = null;
-    private GL gl = null;
+    private GL2 gl = null;
     private GLU glu = new GLU();
 
     public CameraManager() {
         super();
     }
 
-    public CameraManager(final GL gl) {
+    public CameraManager(final GL2 gl) {
         this.gl = gl;
     }
 
@@ -136,7 +137,7 @@ public class CameraManager {
      * @param gl
      *            the gl to set
      */
-    public void setGl(final GL gl) {
+    public void setGl(final GL2 gl) {
         this.gl = gl;
     }
 

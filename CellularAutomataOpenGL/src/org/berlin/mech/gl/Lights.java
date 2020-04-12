@@ -40,8 +40,10 @@ package org.berlin.mech.gl;
 
 import java.nio.FloatBuffer;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
+//com.jogamp.opengl
 /**
  * @author bbrown
  *
@@ -70,41 +72,41 @@ public class Lights {
     
     private Light light = new Light();
     
-    public static void setmaterial(final GL gl, final float amb[], final float diff[], final float spec[], final float shine[], final float emiss[]) {        
-        gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, FloatBuffer.wrap(amb));
-        gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, FloatBuffer.wrap(diff));
-        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, FloatBuffer.wrap(spec));
-        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, FloatBuffer.wrap(shine));
-        gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, FloatBuffer.wrap(emiss));
+    public static void setmaterial(final GL2 gl, final float amb[], final float diff[], final float spec[], final float shine[], final float emiss[]) {
+        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_AMBIENT, FloatBuffer.wrap(amb));
+        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_DIFFUSE, FloatBuffer.wrap(diff));
+        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_SPECULAR, FloatBuffer.wrap(spec));
+        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_SHININESS, FloatBuffer.wrap(shine));
+        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_EMISSION, FloatBuffer.wrap(emiss));
     } // end of the function
     
-    public void setLight(final GL gl) {    
+    public void setLight(final GL2 gl) {
 
         // Enable lighting
-        gl.glEnable(GL.GL_LIGHTING);
-        gl.glEnable(GL.GL_LIGHT0);        
+        gl.glEnable(GL2.GL_LIGHTING);
+        gl.glEnable(GL2.GL_LIGHT0);
         
         // Setup the light
-        gl.glLightfv(light.light_id, GL.GL_POSITION, FloatBuffer.wrap(light.position));
-        gl.glDisable(GL.GL_LIGHTING);
+        gl.glLightfv(light.light_id, GL2.GL_POSITION, FloatBuffer.wrap(light.position));
+        gl.glDisable(GL2.GL_LIGHTING);
         this.renderWirebox(gl);
-        gl.glEnable(GL.GL_LIGHTING);
-        gl.glEnable(GL.GL_LIGHT0); 
+        gl.glEnable(GL2.GL_LIGHTING);
+        gl.glEnable(GL2.GL_LIGHT0);
         
     } // end of the function     
     
-    public void renderWirebox(final GL gl) {    
+    public void renderWirebox(final GL2 gl) {
         gl.glPushMatrix();
         gl.glTranslatef(light.position[0], light.position[1], light.position[2]);
         this.drawWirebox(gl);
         gl.glPopMatrix();
     } // end of the function 
     
-    public void drawWirebox(final GL gl) {        
+    public void drawWirebox(final GL2 gl) {
         float size = 0.4f;
 
         gl.glColor3f(1.0f, 1.0f, 1.0f);
-        gl.glBegin(GL.GL_LINE_LOOP);
+        gl.glBegin(GL2.GL_LINE_LOOP);
         // Front Face
         gl.glVertex3f(-size,  0.0f,  size);    // left bottom 
         gl.glVertex3f( size,  0.0f,  size);    // right bottom

@@ -36,8 +36,9 @@
  */
 package org.berlin.mech.game;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
+import com.jogamp.opengl.GL2;
 import org.berlin.mech.gl.CoreObjects;
 
 /**
@@ -75,7 +76,7 @@ public class CellularAutomataSquaringRule {
     /**
      * Render all cells if alive.
      */
-    public void renderCellularAutomata(final GL gl, final long clock) {
+    public void renderCellularAutomata(final GL2 gl, final long clock) {
         
         final CoreObjects coreObjects = new CoreObjects();
         float x = -30.0f;

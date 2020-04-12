@@ -47,17 +47,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLCanvas;
-import javax.media.opengl.GLEventListener;
-import javax.media.opengl.glu.GLU;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.awt.GLCanvas;
+import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.glu.GLU;
 
 import org.berlin.mech.game.CellularAutomataSquaringRule;
 import org.berlin.mech.game.Plane;
 import org.berlin.mech.main.GLGridApp;
 
-public class GLMainRenderer implements GLEventListener, MouseListener, MouseMotionListener, KeyListener {
+public class  GLMainRenderer implements GLEventListener, MouseListener, MouseMotionListener, KeyListener {
 
     public static final int GL_WIDTH = GLGridApp.SCREEN_WIDTH;
     public static final int GL_HEIGHT = (int) (GLGridApp.SCREEN_HEIGHT * 0.9);
@@ -80,7 +81,7 @@ public class GLMainRenderer implements GLEventListener, MouseListener, MouseMoti
     /**
      * Build a GL canvas.
      * 
-     * @param args
+//     * @param GLGridApp frame
      */
     public static GLCanvas buildCanvas(final GLGridApp frame) {
         
@@ -92,11 +93,18 @@ public class GLMainRenderer implements GLEventListener, MouseListener, MouseMoti
         return canvas;
     }
 
+
+    @Override
+    public void dispose(GLAutoDrawable glAutoDrawable) {
+        //
+    }
+
+
     public void init(GLAutoDrawable drawable) {
 
         // Use debug pipeline
         // drawable.setGL(new DebugGL(drawable.getGL()));
-        GL gl = drawable.getGL();
+        GL2 gl = drawable.getGL().getGL2();
 
         System.out.println("INIT GL IS: " + gl.getClass().getName());
         System.out.println("Chosen GLCapabilities: " + drawable.getChosenGLCapabilities());
@@ -106,30 +114,30 @@ public class GLMainRenderer implements GLEventListener, MouseListener, MouseMoti
         // Enable Smooth Shading
         // Black Background
         // Depth Buffer Setup
-        gl.glShadeModel(GL.GL_SMOOTH);               
+        gl.glShadeModel(GL2.GL_SMOOTH);
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         gl.glClearDepth(1.0f);                    
 
-        gl.glEnable(GL.GL_NORMALIZE);
-        gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_FILL);
+        gl.glEnable(GL2.GL_NORMALIZE);
+        gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
 
-        gl.glShadeModel(GL.GL_SMOOTH);
+        gl.glShadeModel(GL2.GL_SMOOTH);
         // Enables Depth Testing
-        gl.glEnable(GL.GL_DEPTH_TEST);                
+        gl.glEnable(GL2.GL_DEPTH_TEST);
         // The Type Of Depth Testing To Do
-        gl.glDepthFunc(GL.GL_LEQUAL);                 
-        gl.glHint(GL.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST);  // Really Nice Perspective Calculations
+        gl.glDepthFunc(GL2.GL_LEQUAL);
+        gl.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST);  // Really Nice Perspective Calculations
         
         /****************************************
          * Continue with initialization
          ****************************************/ 
-        gl.glColorMaterial (GL.GL_FRONT_AND_BACK, GL.GL_DIFFUSE|GL.GL_SPECULAR|GL.GL_EMISSION );
+        gl.glColorMaterial (GL2.GL_FRONT_AND_BACK, GL2.GL_DIFFUSE|GL2.GL_SPECULAR|GL2.GL_EMISSION );
         /*
          try also:
            glMaterial ( GL_FRONT_AND_BACK, GL_EMISSION, ...colours... ) ; or
            glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
         */
-        gl.glEnable(GL.GL_COLOR_MATERIAL);
+        gl.glEnable(GL2.GL_COLOR_MATERIAL);
         Lights.setmaterial(gl, Lights.no_mat, Lights.mat_diffuse, Lights.mat_specular, Lights.low_shininess, Lights.no_mat);
         
         cameraManager.setGl(gl);
@@ -139,10 +147,10 @@ public class GLMainRenderer implements GLEventListener, MouseListener, MouseMoti
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 
-        GL gl = drawable.getGL();
-        System.out.println("GL_VENDOR: " + gl.glGetString(GL.GL_VENDOR));
-        System.out.println("GL_RENDERER: " + gl.glGetString(GL.GL_RENDERER));
-        System.out.println("GL_VERSION: " + gl.glGetString(GL.GL_VERSION));
+        GL2 gl = drawable.getGL().getGL2();
+        System.out.println("GL_VENDOR: " + gl.glGetString(GL2.GL_VENDOR));
+        System.out.println("GL_RENDERER: " + gl.glGetString(GL2.GL_RENDERER));
+        System.out.println("GL_VERSION: " + gl.glGetString(GL2.GL_VERSION));
         if (height <= 0) {
             height = 1;
         }        
@@ -150,26 +158,26 @@ public class GLMainRenderer implements GLEventListener, MouseListener, MouseMoti
         final float h = (float) width / (float) height;
         gl.glViewport(0, 0, width,height);          
         // Select The Projection Matrix
-        gl.glMatrixMode(GL.GL_PROJECTION);        
+        gl.glMatrixMode(GL2.GL_PROJECTION);
         // Reset The Projection Matrix
         gl.glLoadIdentity();                   
 
         // Calculate The Aspect Ratio Of The Window
         glu.gluPerspective(45.0f, h, 0.1f, 600.0f);
         // Select The Modelview Matrix
-        gl.glMatrixMode(GL.GL_MODELVIEW);             
+        gl.glMatrixMode(GL2.GL_MODELVIEW);
         // Reset The Modelview Matrix
         gl.glLoadIdentity();                                  
     }
 
     public void display(GLAutoDrawable drawable) {
 
-        final GL gl = drawable.getGL();
+        final GL2 gl = drawable.getGL().getGL2();
         final Lights lights = new Lights();      
         final Plane plane = new Plane();        
         
         // Clear Screen And Depth Buffer
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+        gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);        
         gl.glLoadIdentity();
         gl.glPushMatrix();

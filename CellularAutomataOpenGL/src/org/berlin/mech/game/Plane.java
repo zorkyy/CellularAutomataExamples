@@ -39,8 +39,9 @@ package org.berlin.mech.game;
 
 import java.nio.FloatBuffer;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
+import com.jogamp.opengl.GL2;
 import org.berlin.mech.gl.Lights;
 import org.berlin.mech.math.MathLib;
 
@@ -50,19 +51,19 @@ import org.berlin.mech.math.MathLib;
  */
 public class Plane {
 
-    public void renderPlane(final GL gl) {
+    public void renderPlane(final GL2 gl) {
 
-        gl.glEnable(GL.GL_LIGHTING);
-        gl.glDisable(GL.GL_TEXTURE_2D);
+        gl.glEnable(GL2.GL_LIGHTING);
+        gl.glDisable(GL2.GL_TEXTURE_2D);
         // set the material for this object
         Lights.setmaterial(gl, Lights.grey_ambient, Lights.grey_diffuse, Lights.grey_specular, Lights.ilow_shininess, Lights.imat_emission);
         gl.glPushMatrix();
         drawHex(gl);
         gl.glPopMatrix();
-        gl.glEnable(GL.GL_TEXTURE_2D);
+        gl.glEnable(GL2.GL_TEXTURE_2D);
     }
 
-    public void drawHexplane(final GL gl , final float x_1, final float x_2, final float y_1, final float size) {
+    public void drawHexplane(final GL2 gl , final float x_1, final float x_2, final float y_1, final float size) {
 
         /*
          #define N_0 CalcNormal(v[0], v[1], v[2], n)
@@ -182,7 +183,7 @@ public class Plane {
 
     } // end of the function
 
-    public void drawHex(final GL gl) {
+    public void drawHex(final GL2 gl) {
         
         float size = Constants.HEX_SIZE;
         float height = Constants.HEX_HEIGHT;
@@ -198,7 +199,7 @@ public class Plane {
 
         float i = 0.0f;
                 
-        gl.glBegin(GL.GL_TRIANGLES);
+        gl.glBegin(GL2.GL_TRIANGLES);
         for (i = y_1; i < y_2; i += height) {
             drawHexplane(gl, x_1 - offset, x_2, i, size);
             if (s_flag == true) {
